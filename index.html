@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Stats | Rayy Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root { --p: #8e44ad; --bg: #020617; --c: #10192e; --w: #f8fafc; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background: var(--bg); color: var(--w); padding: 15px; font-size: 11px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 15px; }
+        .box { background: var(--c); padding: 15px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.05); }
+        .box h2 { font-family: 'JetBrains Mono'; font-size: 22px; color: var(--p); }
+        .box p { font-size: 8px; opacity: 0.5; text-transform: uppercase; margin-top: 5px; }
+        .pnl { background: var(--c); border-radius: 20px; padding: 15px; margin-bottom: 10px; border: 1px solid rgba(255,255,255,0.03); }
+        .head { display: flex; justify-content: space-between; margin-bottom: 10px; font-weight: 800; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 5px; }
+        .list { max-height: 180px; overflow: hidden; display: flex; flex-direction: column; gap: 8px; font-family: 'JetBrains Mono'; color: #94a3b8; }
+        .ava { height: 25px; width: 25px; border-radius: 50%; background: var(--p); display: inline-flex; align-items: center; justify-content: center; color: white; font-size: 10px; margin-right: 8px; }
+        b { color: var(--p); }
+    </style>
+</head>
+<body>
+    <div class="grid">
+        <div class="box"><h2 id="l">12.547</h2><p>Total Login</p></div>
+        <div class="box"><h2 id="d">8.942</h2><p>Total Daftar</p></div>
+        <div class="box"><h2 id="o" style="color:#2ecc71">26</h2><p>User Online</p></div>
+        <div class="box"><h2 id="f" style="color:#e74c3c">24</h2><p>User Offline</p></div>
+    </div>
+    <div class="pnl">
+        <div class="head">RECENT ACTIVITY <span style="color:#2ecc71">● LIVE FEED</span></div>
+        <div class="list" id="feed"></div>
+    </div>
+    <script>
+        const nm = ["Aliep", "Rashif", "Icha", "Azura", "Kyle", "Caca", "Danz", "Zidan", "Kenz", "Fathan", "Ghani", "Rifky", "Adit", "Sari", "Bintang", "X-Warhead"];
+        const act = ["Baru daftar", "Login sistem", "Upgrade VIP", "Kirim pesan", "Update profil"];
+        let sl=12547, sd=8942, so=26, sf=24;
+        function run() {
+            const n = nm[Math.floor(Math.random()*nm.length)];
+            const a = act[Math.floor(Math.random()*act.length)];
+            sl += Math.floor(Math.random()*3);
+            sd += Math.floor(Math.random()*2) + 1;
+            if(so < 500) {
+                so += Math.floor(Math.random()*5) + 2; 
+            } else {
+                so += Math.floor(Math.random()*3) - 1;
+            }
+            sf = Math.floor(so * 0.1);
+            document.getElementById('l').innerText = sl.toLocaleString();
+            document.getElementById('d').innerText = sd.toLocaleString();
+            document.getElementById('o').innerText = so.toLocaleString();
+            document.getElementById('f').innerText = sf.toLocaleString();
+            const f = document.getElementById('feed');
+            f.insertAdjacentHTML('afterbegin', `<div><span class="ava">${n[0]}</span><b>@${n}</b> ${a}</div>`);
+            if(f.children.length > 8) f.lastElementChild.remove();
+            setTimeout(run, 1500); 
+        }
+        run();
+    </script>
+</body>
+</html>
